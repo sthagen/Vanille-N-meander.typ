@@ -1,6 +1,34 @@
 # Changelog
 
-## v0.4.0 -> dev
+## v0.4.4 -> dev
+
+### Bugfix
+- words that contain a hyphen should not get an extra one
+
+## v0.4.3 -> v0.4.4
+
+### Bugfix
+- handle `first-line-indent` and `hanging-indent` when splitting a `par`
+
+### Debug
+- new toplevel element `review` allows easier debugging and inspection
+  of the previous reflow.
+
+## v0.4.2 -> v0.4.3
+
+### Bugfix
+- would incorrectly attempt to split tables
+- content would sometimes fail to go to the next page because the heuristics
+  that prevent edge cases of `measure` were too strict.
+  
+
+## v0.4.1 -> v0.4.2
+
+### Bugfix
+- assertion would fail when a box is filled to the point that the additional
+  space inserted at the end does not fit.
+
+## v0.4.0 -> v0.4.1
 
 ### Internals
 - introduced normalization passes to improve bisection

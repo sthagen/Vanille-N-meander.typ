@@ -191,8 +191,12 @@
   assert(cfg.hyphenate != false, message: "Internal error: `split-word` cannot be invoked when hypenation is not enabled.")
   import "@preview/hy-dro-gen:0.1.1" as hy
   let syllables = hy.syllables(ww, lang: cfg.lang, fallback: auto)
+  let rebuild-left(i) = {
+    let syls = syllables.slice(0, i)
+    syls.join("") + if not syls.last().ends-with("-") { "-" }
+  }
   for i in range(syllables.len()) {
-    if fits-inside(syllables.slice(0, i + 1).join("") + "-") {
+    if fits-inside(rebuild-left(i + 1)) {
       continue
     } else {
       if i == 0 {
@@ -200,7 +204,7 @@
         let right = ww
         return (left, right)
       } else {
-        let left = syllables.slice(0, i).join("") + "-"
+        let left = rebuild-left(i)
         let right = syllables.slice(i).join("")
         assert(fits-inside(left), message: "Internal error: edge case in `split-word` while handling '" + repr(ww) + "': does not fit in the allocated space")
         return (left, right)
